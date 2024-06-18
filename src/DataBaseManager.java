@@ -49,5 +49,4 @@ public class DataBaseManager {
     }
 
     public void show(int id) throws SQLException {}
-    }
 }
