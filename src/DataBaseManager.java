@@ -48,10 +48,6 @@ public class DataBaseManager {
         preparedStatement.execute();
     }
 
-    public void show(Book book) throws SQLException {
-        ResultSet resultSet=connection.createStatement().executeQuery("select * from book");
-        while(resultSet.next()){
-            System.out.println(resultSet.getString(2));//参数表示表中的列参数顺序
-        }
+    public void show(int id) throws SQLException {}
     }
 }
