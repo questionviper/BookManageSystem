@@ -1,12 +1,14 @@
+package BookManageSystem.element;
+
 import java.sql.*;
 
-public class DataBaseManager {
+public class BookDataBaseManager {
     String url="jdbc:mysql://localhost:3306/BookManageSystem";
     String username="root";
     String password="jtzgys0327";
-    Connection connection =null;
+    public Connection connection =null;
     PreparedStatement preparedStatement = null;
-    public DataBaseManager(){
+    public BookDataBaseManager(){
         boolean success=false;
         while(!success)
         {
@@ -23,7 +25,9 @@ public class DataBaseManager {
     }
 
     public void insert(Book book) throws SQLException {
-        preparedStatement=connection.prepareStatement("INSERT into book values(?,?,?,?,?,?,?,?)");
+        preparedStatement=connection.prepareStatement("INSERT INTO" +
+                " bookmanagesystem.book (Name, IsbnNum, Publisher, Writer, BorrowStatement, Borrower, BorrowDate)\n" +
+                "VALUES(?,?,?,?,?,?,?)");
         preparedStatement.setObject(1,book.Name);
         preparedStatement.setObject(2,book.IsbnNum);
         preparedStatement.setObject(3,book.Publisher);
@@ -31,13 +35,12 @@ public class DataBaseManager {
         preparedStatement.setObject(5,book.BorrowStatement);
         preparedStatement.setObject(6,book.Borrower);
         preparedStatement.setObject(7,book.BorrowDate);
-        preparedStatement.setObject(8,book.Id);
         preparedStatement.executeUpdate();
     }
 
-    public void delete(Book book) throws SQLException {
+    public void delete(int id) throws SQLException {
         preparedStatement=connection.prepareStatement("DELETE FROM book WHERE Id=?");
-        preparedStatement.setString(1, String.valueOf(book.Id));
+        preparedStatement.setString(1, String.valueOf(id));
         preparedStatement.executeUpdate();
     }
 
@@ -47,6 +50,9 @@ public class DataBaseManager {
         preparedStatement.setString(2,String.valueOf(id));
         preparedStatement.execute();
     }
-
-    public void show(int id) throws SQLException {}
+    public ResultSet searchBookByName(String bookName) throws SQLException {
+        preparedStatement = connection.prepareStatement("SELECT * FROM book WHERE Name LIKE ?");
+        preparedStatement.setString(1, "%" + bookName + "%"); // 使用 LIKE 进行模糊匹配
+        return preparedStatement.executeQuery();
+    }
 }

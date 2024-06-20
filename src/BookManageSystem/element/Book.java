@@ -1,3 +1,5 @@
+package BookManageSystem.element;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,5 +15,4 @@ public class Book {
     boolean BorrowStatement;
     String Borrower;
     String BorrowDate;
-    int Id;
 }
